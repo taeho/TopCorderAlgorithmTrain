@@ -1,5 +1,6 @@
 package train02;
 
+import java.util.HashMap;
 /*
  * 즐거운파티 : 문자열 배열 first, second 가 주어집니다. 화이트씨의 i번째 친구가 흥미 있는 화제는
  *    first[i]와 second[i]입니다. 즐거운 파티가 되려면 화이트씨가 초대할 수 있는 친구는 최대 몇명인지 리턴하세요.
@@ -28,31 +29,29 @@ package train02;
  *  
  * */
 
-public class InterestingParty {
-	
+public class InterestingParty1 {
+
 	public static int bestInvitation(String[] first, String[] second){
-		int i, j;
-		int ans = 0;
+		HashMap<String, Integer> dic = new HashMap<String, Integer>();
 		
-		for(i =0; i<first.length; i++){
-			int f = 0;
-			int s = 0;
-			
-			for(j=0; j<first.length; j++){
-				if(first[i].equals(first[j])) f++;
-				if(first[i].equals(second[j])) f++;
-				if(second[i].equals(first[j])) s++;
-				if(second[i].equals(second[j])) s++;
-			}
-			
-			ans = Math.max(f, ans);
-			ans = Math.max(s, ans);
+		for(int i=0; i<first.length; i++){
+			dic.put(first[i], 0);
+			dic.put(second[i], 0);
+		}
+		
+		for(int i=0; i<first.length; i++){
+			dic.put(first[i], dic.get(first[i])+1);
+			dic.put(second[i], dic.get(second[i])+1);
+		}
+		
+		int ans = 0;
+		for(String key: dic.keySet()){
+			ans = Math.max(ans, dic.get(key));
 		}
 		
 		return ans;
-		
 	}
-
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		String[] first = { "fishing", "gardening", "swimming", "fishing"};
